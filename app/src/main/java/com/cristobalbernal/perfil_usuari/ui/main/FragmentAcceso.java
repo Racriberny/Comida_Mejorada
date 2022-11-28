@@ -48,7 +48,6 @@ public class FragmentAcceso extends Fragment {
         actualLetrasNueva = view.findViewById(R.id.tvContraseñaNueva);
         actualLetrasNuevasDos = view.findViewById(R.id.tvRepitaNuevaContraseña);
         buttonOcultar = view.findViewById(R.id.btOcultar);
-        contrasenaCambio = view.findViewById(R.id.tvContraseñaTrampas);
         if (personas !=null){
             mostrarDatos(personas);
         }
@@ -63,7 +62,6 @@ public class FragmentAcceso extends Fragment {
 
     public void mostrarDatos(Persona persona) {
         nombre.setText(persona.getNombre());
-        contrasenaCambio.setText(persona.getContrasena());
         button.setOnClickListener(view ->{
             actual.setVisibility(View.VISIBLE);
             nueva.setVisibility(View.VISIBLE);
@@ -89,12 +87,12 @@ public class FragmentAcceso extends Fragment {
             if (actual.getText().toString().equalsIgnoreCase(persona.getContrasena())){
                 if (nueva.getText().toString().equalsIgnoreCase(nuevaContrasena.getText().toString())){
                     personas.setContrasena(nueva.getText().toString());
-                    Toast.makeText(getContext(),"Se ha cambiado",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),"La contraseña se ha cambiado correctamente!!",Toast.LENGTH_LONG).show();
                 }else {
-                    Toast.makeText(getContext(),"La dos contraseñas no coinciden",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),"La dos contraseñas nuevas no coinciden!!!",Toast.LENGTH_LONG).show();
                 }
             }else {
-                Toast.makeText(getContext(),"La contraseña no coincidem",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),"La contraseña actual no conincide con la de la base de datos!!!",Toast.LENGTH_LONG).show();
             }
         });
 
