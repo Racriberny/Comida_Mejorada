@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,62 +30,35 @@ public class FragmentAcceso extends Fragment {
     private EditText actual;
     private EditText nueva;
     private EditText nuevaContrasena;
-    private TextView actualLetras;
-    private TextView actualLetrasNueva;
-    private TextView actualLetrasNuevasDos;
     private TextView contrasenaCambio;
+    private LinearLayout linearLayout;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        nombre = view.findViewById(R.id.tvNombreAccesoDato);
+        nombre = view.findViewById(R.id.tvUsername);
         actual = view.findViewById(R.id.etNuevaActual);
         nueva = view.findViewById(R.id.etNuevaAcesso);
-        button = view.findViewById(R.id.btCambiarContraseña);
-        buttonGuardar = view.findViewById(R.id.btGuuardar);
+        button = view.findViewById(R.id.bChangePassword);
+        buttonGuardar = view.findViewById(R.id.bSavePassword);
         nuevaContrasena = view.findViewById(R.id.etNuevaAcessoDos);
-        actualLetras = view.findViewById(R.id.tvContraseña);
-        actualLetrasNueva = view.findViewById(R.id.tvContraseñaNueva);
-        actualLetrasNuevasDos = view.findViewById(R.id.tvRepitaNuevaContraseña);
-        buttonOcultar = view.findViewById(R.id.btOcultar);
-        if (personas !=null){
-            mostrarDatos(personas);
-        }
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        IOnAttachListener attachListener = (IOnAttachListener) context;
-        personas = attachListener.getAceso();
-    }
-
-    public void mostrarDatos(Persona persona) {
-        nombre.setText(persona.getNombre());
-        button.setOnClickListener(view ->{
-            actual.setVisibility(View.VISIBLE);
-            nueva.setVisibility(View.VISIBLE);
-            nuevaContrasena.setVisibility(View.VISIBLE);
-            actualLetras.setVisibility(View.VISIBLE);
-            actualLetrasNueva.setVisibility(View.VISIBLE);
-            actualLetrasNuevasDos.setVisibility(View.VISIBLE);
-            buttonOcultar.setVisibility(View.VISIBLE);
-            buttonGuardar.setVisibility(View.VISIBLE);
-
+        TextView actualLetras = view.findViewById(R.id.tvCurrentPassword);
+        TextView actualLetrasNueva = view.findViewById(R.id.tvNewPassword);
+        TextView actualLetrasNuevasDos = view.findViewById(R.id.tvRepeatNewPswd);
+        buttonOcultar = view.findViewById(R.id.bOcultar);
+        linearLayout = view.findViewById(R.id.panelCambio);
+        linearLayout.setVisibility(View.INVISIBLE);
+        button.setOnClickListener(vieww ->{
+            if (linearLayout.getVisibility() == View.INVISIBLE){
+                linearLayout.setVisibility(View.VISIBLE);
+            }else {
+                linearLayout.setVisibility(View.GONE);
+            }
         });
-        buttonOcultar.setOnClickListener(view -> {
-            actual.setVisibility(View.INVISIBLE);
-            nueva.setVisibility(View.INVISIBLE);
-            nuevaContrasena.setVisibility(View.INVISIBLE);
-            actualLetras.setVisibility(View.INVISIBLE);
-            actualLetrasNueva.setVisibility(View.INVISIBLE);
-            actualLetrasNuevasDos.setVisibility(View.INVISIBLE);
-            buttonOcultar.setVisibility(View.INVISIBLE);
-            buttonGuardar.setVisibility(View.INVISIBLE);
-        });
-        buttonGuardar.setOnClickListener(view -> {
-            if (actual.getText().toString().equalsIgnoreCase(persona.getContrasena())){
+        nombre.setText(personas.getNombre());
+        buttonGuardar.setOnClickListener(viewww -> {
+            if (actual.getText().toString().equalsIgnoreCase(personas.getContrasena())){
                 if (nueva.getText().toString().equalsIgnoreCase(nuevaContrasena.getText().toString())){
                     personas.setContrasena(nueva.getText().toString());
                     Toast.makeText(getContext(),"La contraseña se ha cambiado correctamente!!",Toast.LENGTH_LONG).show();
@@ -95,7 +69,12 @@ public class FragmentAcceso extends Fragment {
                 Toast.makeText(getContext(),"La contraseña actual no conincide con la de la base de datos!!!",Toast.LENGTH_LONG).show();
             }
         });
+    }
 
-
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        IOnAttachListener attachListener = (IOnAttachListener) context;
+        personas = attachListener.getAceso();
     }
 }
