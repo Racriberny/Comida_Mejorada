@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        System.out.println("ffff");
         ViewPager2 viewPager2 = findViewById(R.id.view_pager);
         TabStateAdapter tabStateAdapter = new TabStateAdapter(this);
         viewPager2.setAdapter(tabStateAdapter);
