@@ -1,6 +1,5 @@
 package com.cristobalbernal.perfil_usuari;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,18 +9,12 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.cristobalbernal.perfil_usuari.ui.main.FragmentAcceso;
-import com.cristobalbernal.perfil_usuari.ui.main.FragmentPersonal;
-import com.cristobalbernal.perfil_usuari.ui.main.FragmentProfesional;
-import com.cristobalbernal.perfil_usuari.ui.main.Persona;
+import com.cristobalbernal.perfil_usuari.ui.main.Fragment400;
+import com.cristobalbernal.perfil_usuari.ui.main.Fragment300;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-public class MainActivity extends AppCompatActivity implements FragmentPersonal.IOnAttachListener, FragmentProfesional.IOnAttachListener, FragmentAcceso.IOnAttachListener{
-    public Persona persona = new Persona("12345","Juan","Palomo Garcia",
-            "04/08/1995(24 años)","C/Major, 35 03730 Xabia","John Doe, S.L",
-            "B123456","http://johndoe.com","juanpalomo@johndoe.com","123");
-    @SuppressLint("MissingInflatedId")
+public class MainActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,13 +31,10 @@ public class MainActivity extends AppCompatActivity implements FragmentPersonal.
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                 switch (position) {
                     case 0:
-                        tab.setText("Personales");
+                        tab.setText("400");
                         break;
                     case 1:
-                        tab.setText("Profesionales");
-                        break;
-                    case 2:
-                        tab.setText("Contraseña");
+                        tab.setText("300");
                         break;
                 }
             }
@@ -53,22 +43,6 @@ public class MainActivity extends AppCompatActivity implements FragmentPersonal.
 
     }
 
-
-    @Override
-    public Persona getPersona() {
-        return persona;
-
-    }
-
-    @Override
-    public Persona getPerson() {
-        return persona;
-    }
-
-    @Override
-    public Persona getAceso() {
-        return persona;
-    }
 
     public static class TabStateAdapter extends FragmentStateAdapter {
         public TabStateAdapter(@NonNull FragmentActivity fragmentActivity) {
@@ -80,19 +54,17 @@ public class MainActivity extends AppCompatActivity implements FragmentPersonal.
         public Fragment createFragment(int position) {
             switch(position) {
                 case 0:
-                    return new FragmentPersonal();
+                    return new Fragment400();
                 case 1:
-                    return new FragmentProfesional();
-                case 2:
-                    return new FragmentAcceso();
+                    return new Fragment300();
                 default:
-                    return new FragmentPersonal();
+                    return new Fragment400();
             }
         }
 
         @Override
         public int getItemCount() {
-            return 3;
+            return 2;
         }
     }
 }
